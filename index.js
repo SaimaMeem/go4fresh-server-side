@@ -57,7 +57,14 @@ async function run() {
             const query = {_id:ObjectId(id)};
             const result = await itemCollection.deleteOne(query);
             res.send(result);
-        })
+        });
+        //POST ADD ONE ITEM
+        app.post('/items',async(req,res)=>{
+            const newIem = req.body;
+            const result = await itemCollection.insertOne(newIem);
+            console.log(result);
+            res.send(result);
+        });
     }
     finally {
 
