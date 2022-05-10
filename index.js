@@ -65,6 +65,15 @@ async function run() {
             console.log(result);
             res.send(result);
         });
+             //GET BASED ON EMAIL ADDRESS
+             app.get('/myitems', async (req, res) => {
+                 const email = req.query.email;
+                const query = {email:email};
+                const cursor = itemCollection.find(query);
+                const items = await cursor.toArray();
+                console.log(items);
+                res.send(items);
+            });
     }
     finally {
 
