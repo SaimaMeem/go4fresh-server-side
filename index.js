@@ -91,16 +91,16 @@ async function run() {
         app.get('/myitems', verifyJWT, async (req, res) => {
             const decodedEmail = req.decoded.email;
             const email = req.query.email;
-           if(email === decodedEmail){
-            const query = { email: email };
-            const cursor = itemCollection.find(query);
-            const items = await cursor.toArray();
-            // console.log(items);
-            res.send(items);
-           }
-           else{
-               res.status(403).send({message:'Forbidden Access'})
-           }
+            if (email === decodedEmail) {
+                const query = { email: email };
+                const cursor = itemCollection.find(query);
+                const items = await cursor.toArray();
+                // console.log(items);
+                res.send(items);
+            }
+            else {
+                res.status(403).send({ message: 'Forbidden Access' })
+            }
         });
     }
     finally {
