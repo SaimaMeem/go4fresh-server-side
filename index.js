@@ -20,7 +20,6 @@ function verifyJWT(req, res, next) {
         if (err) {
             return res.status(403).send({ message: "Forbidden Access" });
         }
-        console.log('decoded', decoded);
         req.decoded = decoded;
         next();
     });
@@ -34,7 +33,6 @@ async function run() {
         //AUTH
         app.post('/login', async (req, res) => {
             const user = req.body;
-            console.log(user);
             const accessToken = jwt.sign(user, process.env.ACCESS_SECRET_TOKEN, { expiresIn: '1d' });
             res.send({ accessToken });
 
@@ -45,13 +43,11 @@ async function run() {
             const query = {};
             const cursor = itemCollection.find(query);
             const items = await cursor.toArray();
-            console.log(items);
             res.send(items);
         });
         //GET ONE ITEM
         app.get('/items/:id', async (req, res) => {
             const id = req.params.id;
-            console.log(id);
             const query = { _id: ObjectId(id) };
             const item = await itemCollection.findOne(query);
             res.send(item);
@@ -59,9 +55,7 @@ async function run() {
         //PUT UPDATE ONE ITEM
         app.put('/items/:id', async (req, res) => {
             const id = req.params.id;
-            console.log(id);
             const updatedItem = req.body;
-            console.log(updatedItem);
             const filter = { _id: ObjectId(id) };
             const options = { upsert: true };
             const updatedDoc = {
@@ -84,7 +78,6 @@ async function run() {
         app.post('/items', async (req, res) => {
             const newIem = req.body;
             const result = await itemCollection.insertOne(newIem);
-            console.log(result);
             res.send(result);
         });
         //GET BASED ON EMAIL ADDRESS
@@ -95,7 +88,6 @@ async function run() {
                 const query = { email: email };
                 const cursor = itemCollection.find(query);
                 const items = await cursor.toArray();
-                // console.log(items);
                 res.send(items);
             }
             else {
