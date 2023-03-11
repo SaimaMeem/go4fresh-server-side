@@ -99,7 +99,7 @@ async function run() {
 
     }
 }
-run().catch(console.dir());
+run().catch(console.dir);
 
 app.get('/', async (req, res) => {
     res.send('Running on the go4fresh server!');
